@@ -1,0 +1,24 @@
+spec:
+  container:
+  - env:
+      MOUNT_PATH: /dev/shm
+    image: /tutorial_db/data_schema/tutorial_repository/my_2job_image:latest
+    name: main
+    resources:
+      limits:
+        memory: 192G
+        nvidia.com/gpu: 4
+      requests:
+        memory: 188G
+        nvidia.com/gpu: 4
+    volumeMounts:
+    - mountPath: /opt/training-output
+      name: training-output
+    - mountPath: /dev/shm
+      name: dshm
+  volumes:
+  - name: training-output
+    source: '@tutorial_db.data_schema.tutorial_stage'
+  - name: dshm
+    size: 10Gi
+    source: memory
